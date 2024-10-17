@@ -1,0 +1,42 @@
+name: Task
+description: "新機能の提案/タスクの追加など、開発に関するタスク/議論を記述"
+labels: ["enhancement"]
+body:
+
+  - type: markdown
+    attributes:
+      value: |
+        [Issueの立て方](https://github.com/TUS-OSK/quantum-gomoku/tree/develop/docs/0.HowToDev/02.DevProcess#issue%E3%81%AE%E7%AB%8B%E3%81%A6%E6%96%B9)を参考に記述してください。
+  - type: textarea
+    attributes:
+      label: "Problem/Todo"
+      description: "このIssueが閉じられた時に達成されるべき事象を簡潔に記入してください"
+      placeholder: ex. テストについて調査し、迷わず書けるよう整備する
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: "Related Issue"
+      description: |
+        関連するIssueがあれば記述してください。
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: "Details"
+      description: |
+        このIssueに関する詳細情報を記述してください。
+      placeholder: |
+        - 機能/議題の詳細
+        - 背景
+        - その他(参考リンクや注意点や補足事項等)
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: "Other information"
+      description: |
+        その他、必要な情報があれば記述してください。
+    validations:
+      required: false
+
