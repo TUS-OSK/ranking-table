@@ -1,1 +1,38 @@
-aaaaaaa
+1 "/"(root)にアクセスすると、{"message": "Hai"}と返される
+
+func main() {
+	router := gin.Default()
+
+	// "/" ルートにアクセスすると {"message": "Hai"} を返す
+	router.GET("/", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{"message": "Hai"})
+	})
+
+2 "/osk"にアクセスすると、{"osk": true}が返される
+
+func main() {
+	router.GET("/osk", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{"osk": true})
+	})
+
+
+https://qiita.com/ozora/items/0597e52b3f9c1759e292
+この記事から引用して書きました
+
+3
+router.GET("/tus/:id", func(c *gin.Context) {
+    id := c.Param("id")
+    intID, err := strconv.Atoi(id)
+    if err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
+        return
+    }
+    c.JSON(http.StatusOK, gin.H{"id": intID})
+})
+
+router.Run(":8080")
+
+https://rennnosukesann.hatenablog.com/entry/2020/03/29/000000
+この記事とchatgptを参考にして書きました。
+
+Dockerのコンテナへのアクセスができません。
