@@ -1,12 +1,13 @@
 services:
   backend:
     build:
-      context: ./
+      context: ./src/
       dockerfile: Dockerfile
     ports:
       - 8080:8080
     volumes:
-      - ./src:/app/src
+      - ./src:/app
+
   db:
     image: postgres:15
     environment:
