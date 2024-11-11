@@ -7,8 +7,10 @@ services:
       - 8080:8080
     volumes:
       - ./src:/app
-
+    networks:
+      - backend-network
   db:
+    container_name: db
     image: postgres:15
     environment:
       POSTGRES_USER: user
@@ -18,6 +20,12 @@ services:
       - db-store:/var/lib/postgresql/data
     ports:
       - 5432:5432
+    networks:
+      - backend-network
 
 volumes:
   db-store:
+
+networks:
+  backend-network:
+    driver: bridge

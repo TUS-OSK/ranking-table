@@ -4,9 +4,12 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"ranking-table/db"
 )
 
 func main() {
+	db.Connect()
+
 	r := gin.Default()
 
 	r.GET("/", func(c *gin.Context) {
