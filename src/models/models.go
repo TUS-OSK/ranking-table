@@ -11,6 +11,7 @@ type Service struct {
 
 type Result struct {
 	gorm.Model
-	ServiceID uint   `json:"service_id" gorm:"not null"`
+	ServiceID uint   `json:"service_id" gorm:"not null;foreignKey:ServiceID;references:ID"`
 	Score     int    `json:"score" gorm:"not null"`
+	UserName  string `json:"user_name" gorm:"not null;unique"`
 }
