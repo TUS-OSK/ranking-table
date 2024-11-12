@@ -34,7 +34,7 @@ func ShowAllTableHeader(db *gorm.DB) {
 	db.Raw("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'").Scan(&tables)
 	for _, table := range tables {
 		var headers []map[string]interface{}
-		db.Raw(fmt.Sprintf("SELECT * FROM %s LIMIT 3", table)).Scan(&headers)
+		db.Raw(fmt.Sprintf("SELECT * FROM %s", table)).Scan(&headers)
 		fmt.Printf("Table: %s\n", table)
 		for _, header := range headers {
 			fmt.Println(header)

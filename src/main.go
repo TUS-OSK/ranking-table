@@ -12,7 +12,7 @@ import (
 
 func main() {
 	database := databaseInit()
-	db.ShowAllTableHeader(database)
+	db.ShowAllTableHeader(database)	// development用
 
 	r := gin.Default()
 
