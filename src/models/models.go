@@ -4,11 +4,13 @@ import (
 	"gorm.io/gorm"
 )
 
+// Service table model
 type Service struct {
 	gorm.Model
 	Name string `json:"name" gorm:"not null;unique"`
 }
 
+// Result table model
 type Result struct {
 	gorm.Model
 	ServiceID uint   `json:"service_id" gorm:"not null;foreignKey:ServiceID;references:ID"`
@@ -41,7 +43,7 @@ func CreateResult(db *gorm.DB, serviceID int, score int, userName string) {
 
 func GetDescSortedResult(db *gorm.DB, serviceID int) []Result {
 	var results []Result
-	db.Order("score desc").Where("service_id = ?", serviceID).Find(&results)
+	db.Order("score desc, created_at desc").Where("service_id = ?", serviceID).Find(&results)
 	return results
 }
 
