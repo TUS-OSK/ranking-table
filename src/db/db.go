@@ -18,6 +18,12 @@ func Connect() *gorm.DB {
 	return db
 }
 
+func Clean(db *gorm.DB) {
+	db.Exec("DELETE FROM results")
+	db.Exec("DELETE FROM services")
+	fmt.Println("Clean is done.")
+}
+
 func Migration(db *gorm.DB) {
 	db.AutoMigrate(&models.Service{}, &models.Result{})
 	fmt.Println("Migration is done.")

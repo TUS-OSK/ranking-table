@@ -26,8 +26,9 @@ func main() {
 
 func databaseInit() *gorm.DB {
 	database := db.Connect()
+	db.Clean(database)	// development用
 	db.Migration(database)
-	models.ServiceSeed(database)
-	models.ResultSeed(database)
+	models.ServiceSeed(database)// development用を含む
+	models.ResultSeed(database)	// development用
 	return database
 }
