@@ -2,17 +2,34 @@ package main
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	r := gin.Default()
 
-	r.GET("/", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "Hello World",
-		})
+	router := gin.Default()
+
+	// "/" ルートにアクセスすると {"message": "Hai"} を返す
+	router.GET("/", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{"message": "Hai"})
 	})
-	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
+
+	router.GET("/osk", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{"osk": true})
+	})
+
+	router.GET("/tus/:id", func(c *gin.Context) {
+		id := c.Param("id")
+		intID, err := strconv.Atoi(id)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{"id": intID})
+	})
+
+	router.Run(":8080")
+
 }
