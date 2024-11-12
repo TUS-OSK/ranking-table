@@ -21,3 +21,28 @@ func ServiceSeed(db *gorm.DB) {
 	//既に存在している場合は追加しない
 	db.FirstOrCreate(&wikipediaGolf, wikipediaGolf)
 }
+
+
+func CreateService(db *gorm.DB, name string) {
+	service := Service{Name: name}
+	db.Create(&service)
+}
+
+func FindServiceByID(db *gorm.DB, id int) Service {
+	var service Service
+	db.First(&service, id)
+	return service
+}
+
+func CreateResult(db *gorm.DB, serviceID int, score int, userName string) {
+	result := Result{ServiceID: uint(serviceID), Score: score, UserName: userName}
+	db.Create(&result)
+}
+
+func GetDescSortedResult(db *gorm.DB, serviceID int) []Result {
+	var results []Result
+	db.Order("score desc").Where("service_id = ?", serviceID).Find(&results)
+	return results
+}
+
+
