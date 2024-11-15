@@ -33,7 +33,12 @@ func main() {
 	//　練習課題2.1
 	router.POST("/", func(c *gin.Context) {
 		var json struct {
-			Message string "json:\"message\""
+			Message string "json:"message""
+		}
+		err := c.ShouldBindJSON(&json)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
 		}
 		c.JSON(http.StatusCreated, gin.H{"message": json.Message})
 	})
