@@ -20,16 +20,6 @@ func main() {
 		c.JSON(http.StatusOK, gin.H{"osk": true})
 	})
 
-	router.GET("/tus/:id", func(c *gin.Context) {
-		id := c.Param("id")
-		intID, err := strconv.Atoi(id)
-		if err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
-			return
-		}
-		c.JSON(http.StatusOK, gin.H{"id": intID})
-	})
-
 	//　練習課題2.1
 	router.POST("/", func(c *gin.Context) {
 		var json struct {
