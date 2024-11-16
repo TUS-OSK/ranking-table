@@ -4,9 +4,19 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
+
+	"ranking-table/db"
+	"ranking-table/models"
 )
 
+
+
+
+
 func main() {
+	database := databaseInit()
+	db.ShowAllTableHeader(database) // development用
 
 	router := gin.Default()
 
@@ -48,4 +58,13 @@ func main() {
 
 	router.Run(":8080")
 
+}
+
+func databaseInit() *gorm.DB {
+	database := db.Connect()
+	db.Clean(database) // development用
+	db.Migration(database)
+	models.ServiceSeed(database) // development用を含む
+	models.ResultSeed(database)  // development用
+	return database
 }
