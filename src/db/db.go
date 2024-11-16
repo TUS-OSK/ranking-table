@@ -19,8 +19,8 @@ func Connect() *gorm.DB {
 }
 
 func Clean(db *gorm.DB) {
-	db.Exec("DELETE FROM results")
-	db.Exec("DELETE FROM services")
+	db.Exec("TRUNCATE TABLE results RESTART IDENTITY CASCADE")
+	db.Exec("TRUNCATE TABLE services RESTART IDENTITY CASCADE")
 	fmt.Println("Clean is done.")
 }
 
