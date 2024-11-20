@@ -22,9 +22,21 @@ services:
       - db-store:/var/lib/postgresql/data
     networks:
       - backend-network
+  frontend:
+    build:
+      context: ./frontend/
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend/src:/app/src
+      - frontend-node-modules:/app/node_modules
+      - frontend-public:/app/public
 
 volumes:
   db-store:
+  frontend-node-modules:
+  frontend-public:
 
 networks:
   backend-network:
