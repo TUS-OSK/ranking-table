@@ -29,7 +29,7 @@ export default function Leaderboard() {
   };
 
   const [topUsers, setTopUsers] = useState([
-    { name: "田中太郎", score: 9850 },
+    { name: "田中太郎", score: 10003002 },
     { name: "佐藤花子", score: 9720 },
     { name: "鈴木一郎", score: 9580 },
     { name: "高橋美咲", score: 9450 },
@@ -39,7 +39,7 @@ export default function Leaderboard() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://api.example.com/leaderboard');
+        const response = await fetch('http://54.84.41.124:8080/');
         const data = await response.json();
         setTopUsers(data); // Update state with fetched data
       } catch (error) {
@@ -55,9 +55,9 @@ export default function Leaderboard() {
   return (
     <div className="flex items-center justify-center w-screen h-screen bg-gradient-to-br from-blue-500 to-purple-600 overflow-hidden">
       <div className="w-full h-full flex flex-col bg-white">
-        <div className="text-3xl font-bold text-center text-gray-800 py-2 bg-gray-100 flex-shrink-0 flex items-center justify-center"
-          style={{ height: `${height * 0.15}px`, fontSize: `${height * 0.07}px` }}>
-          トップスコア
+        <div className="text-3xl font-bold text-center text-gray-800 py-2 mt-6 flex-shrink-0 flex items-center justify-center"
+          style={{ height: `${height * 0.17}px`, fontSize: `${height * 0.09}px` }}>
+          ⛳ Wikipedia Golf 本日のランキング ⛳
         </div>
         <ul className="flex-grow flex flex-col justify-between p-2 overflow-hidden" role="list">
           {topUsers.map((user, index) => (
@@ -95,7 +95,8 @@ export default function Leaderboard() {
                     className={`font-bold pr-10 text-blue-600`}
                     aria-label={`スコア: ${user.score.toLocaleString()}`}
                   >
-                    {user.score.toLocaleString()}
+                    {Math.floor(user.score / 10 ** 6) + '打  ' +
+                      `${Math.floor((user.score % 10 ** 6) / 60).toString().padStart(2, '0')}:${(user.score % 60).toString().padStart(2, '0')}`}
                   </span>
                 </div>
               </div>
