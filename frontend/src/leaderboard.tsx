@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 import { Crown } from 'lucide-react'
 
 const useWindowSize = (): number[] => {
@@ -19,14 +19,6 @@ const useWindowSize = (): number[] => {
 export default function Leaderboard() {
   const [width, height] = useWindowSize();
 
-  const topUsers = [
-    { name: "田中太郎", score: 9850 },
-    { name: "佐藤花子", score: 9720 },
-    { name: "鈴木一郎", score: 9580 },
-    { name: "高橋美咲", score: 9450 },
-    { name: "伊藤健太", score: 9320 },
-  ];
-
   const getCrownColor = (index: number) => {
     switch (index) {
       case 0: return 'text-yellow-400';
@@ -36,10 +28,29 @@ export default function Leaderboard() {
     }
   };
 
-  const calculateSize = (baseSize: number, index: number): number => {
-    const scaleFactor = Math.min(width, height) / 1200;
-    return baseSize * scaleFactor * (3 - index * 0.1);
-  };
+  const [topUsers, setTopUsers] = useState([
+    { name: "田中太郎", score: 9850 },
+    { name: "佐藤花子", score: 9720 },
+    { name: "鈴木一郎", score: 9580 },
+    { name: "高橋美咲", score: 9450 },
+    { name: "伊藤健太", score: 9320 },
+  ]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('https://api.example.com/leaderboard');
+        const data = await response.json();
+        setTopUsers(data); // Update state with fetched data
+      } catch (error) {
+        console.error('Error fetching leaderboard data:', error);
+      }
+    };
+
+    const intervalId = setInterval(fetchData, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <div className="flex items-center justify-center w-screen h-screen bg-gradient-to-br from-blue-500 to-purple-600 overflow-hidden">
