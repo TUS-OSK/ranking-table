@@ -44,58 +44,54 @@ export default function Leaderboard() {
   return (
     <div className="flex items-center justify-center w-screen h-screen bg-gradient-to-br from-blue-500 to-purple-600 overflow-hidden">
       <div className="w-full h-full flex flex-col bg-white">
-        <h1 className="text-3xl font-bold text-center text-gray-800 py-2 bg-gray-100 flex-shrink-0"
-          style={{ height: `${height * 0.1}px`, fontSize: `${calculateSize(36, 0)}px` }}>
+        <div className="text-3xl font-bold text-center text-gray-800 py-2 bg-gray-100 flex-shrink-0 flex items-center justify-center"
+          style={{ height: `${height * 0.15}px`, fontSize: `${height * 0.07}px` }}>
           トップスコア
-        </h1>
+        </div>
         <ul className="flex-grow flex flex-col justify-between p-2 overflow-hidden" role="list">
           {topUsers.map((user, index) => (
             <li
               key={index}
-              className={`flex items-center justify-between rounded-lg transition-transform hover:scale-105
-                ${index === 0 ? 'bg-yellow-100 shadow-lg' :
-                  index === 1 ? 'bg-gray-200' :
-                    index === 2 ? 'bg-gray-100' :
-                      'bg-white'}`}
-              style={{ height: `${height * (0.16 - index * 0.02)}px` }}
+              className={`flex items-center justify-between p-4`}
+              style={{ height: `${height * (index === 0 ? 0.3 : index === 1 ? 0.2 : index === 2 ? 0.15 : 0.1)}px`, fontSize: `${height * (index === 0 ? 0.08 : index === 1 ? 0.06 : index === 2 ? 0.05 : 0.03)}px` }}
               role="listitem"
             >
-              <div className="flex items-center h-full flex-1 px-2">
-                <div className="relative mr-2" style={{ height: '80%', aspectRatio: '1 / 1' }}>
-                  <span
-                    className="absolute inset-0 font-bold text-white bg-blue-500 rounded-full flex items-center justify-center"
-                    style={{ fontSize: `${calculateSize(24, index)}px` }}
-                    aria-hidden="true"
-                  >
-                    {index + 1}
-                  </span>
-                  {index < 3 && (
-                    <Crown
-                      className={`absolute -top-10% -left-10% ${getCrownColor(index)}`}
-                      style={{ width: '50%', height: '50%' }}
+              <div className={`h-full w-full flex items-center justify-between rounded-lg
+          ${index === 0 ? 'bg-yellow-100 shadow-lg' :
+                  index === 1 ? 'bg-gray-200' :
+                    index === 2 ? 'bg-gray-100' :
+                      'bg-white'}`}>
+                <div className="flex items-center h-full flex-1 px-2">
+                  <div className="relative mr-2" style={{ height: '80%', aspectRatio: '1 / 1' }}>
+                    <span
+                      className="absolute inset-0 font-bold text-white bg-blue-500 rounded-full flex items-center justify-center"
                       aria-hidden="true"
-                    />
-                  )}
+                    >
+                      {index + 1}
+                    </span>
+                    {index < 3 && (
+                      <Crown
+                        className={`absolute -top-10% -left-10% ${getCrownColor(index)}`}
+                        style={{ width: '50%', height: '50%' }}
+                        aria-hidden="true"
+                      />
+                    )}
+                  </div>
+                  <span className="font-bold text-gray-800 flex-1 px-8" >
+                    {user.name}
+                  </span>
+                  <span
+                    className={`font-bold pr-10 text-blue-600`}
+                    aria-label={`スコア: ${user.score.toLocaleString()}`}
+                  >
+                    {user.score.toLocaleString()}
+                  </span>
                 </div>
-                <span className="font-bold text-gray-800 flex-1 px-2" style={{ fontSize: `${calculateSize(22, index)}px` }}>
-                  {user.name}
-                </span>
-                <span
-                  className={`font-bold ${index === 0 ? 'text-blue-600' :
-                      index === 1 ? 'text-blue-500' :
-                        index === 2 ? 'text-blue-400' :
-                          'text-blue-300'
-                    }`}
-                  style={{ fontSize: `${calculateSize(24, index)}px` }}
-                  aria-label={`スコア: ${user.score.toLocaleString()}`}
-                >
-                  {user.score.toLocaleString()}
-                </span>
               </div>
             </li>
           ))}
         </ul>
       </div>
-    </div>
+    </div >
   );
 }
