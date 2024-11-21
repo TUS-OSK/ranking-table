@@ -63,16 +63,16 @@ export default function Leaderboard() {
           {topUsers.map((user, index) => (
             <li
               key={index}
-              className={`flex items-center justify-between p-4`}
-              style={{ height: `${height * (index === 0 ? 0.3 : index === 1 ? 0.2 : index === 2 ? 0.15 : 0.1)}px`, fontSize: `${height * (index === 0 ? 0.08 : index === 1 ? 0.06 : index === 2 ? 0.05 : 0.03)}px` }}
+              className={`flex items-center justify-between p-3`}
+              style={{ height: `${height * (index === 0 ? 0.3 : index === 1 ? 0.2 : index === 2 ? 0.17 : 0.1)}px`, fontSize: `${height * (index === 0 ? 0.08 : index === 1 ? 0.06 : index === 2 ? 0.05 : 0.03)}px` }}
               role="listitem"
             >
-              <div className={`h-full w-full flex items-center justify-between rounded-lg
+              <div className={`h-full w-full flex items-center justify-between rounded-lg mx-4 my-2
           ${index === 0 ? 'bg-yellow-100 shadow-lg' :
-                  index === 1 ? 'bg-gray-200' :
-                    index === 2 ? 'bg-gray-100' :
+                  index === 1 ? 'bg-gray-200 shadow-lg' :
+                    index === 2 ? 'bg-orange-200 shadow-lg' :
                       'bg-white'}`}>
-                <div className="flex items-center h-full flex-1 px-2">
+                <div className="flex items-center h-full flex-1 px-5">
                   <div className="relative mr-2" style={{ height: '80%', aspectRatio: '1 / 1' }}>
                     <span
                       className="absolute inset-0 font-bold text-white bg-blue-500 rounded-full flex items-center justify-center"
@@ -82,8 +82,8 @@ export default function Leaderboard() {
                     </span>
                     {index < 3 && (
                       <Crown
-                        className={`absolute -top-10% -left-10% ${getCrownColor(index)}`}
-                        style={{ width: '50%', height: '50%' }}
+                        className={`absolute -top-[10%] -left-[10%] ${getCrownColor(index)}`}
+                        style={{ width: '55%', height: '55%' }}
                         aria-hidden="true"
                       />
                     )}
