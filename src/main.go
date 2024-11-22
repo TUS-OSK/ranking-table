@@ -86,6 +86,25 @@ func main() {
 		c.JSON(http.StatusCreated, newResult)
 	})
 
+	// 本実装2
+	router.GET("/:id", func(c *gin.Context) {
+		id, _ := strconv.ParseUint(c.Param("id"), 10, 32)
+		// 上位5件のスコアを取得する
+		results := models.Get5thResultSortedByScore(uint(id), database)
+
+		type responseUser struct {
+			Name  string `json:"name"`
+			Score int    `json:"score"`
+		}
+
+		var response []responseUser
+		for _, result := range results {
+			response = append(response, responseUser{Name: result.UserName, Score: result.Score})
+		}
+
+		c.JSON(http.StatusOK, response)
+	})
+
 	router.Run(":8080")
 
 }
