@@ -45,8 +45,8 @@ func ResultSeed(db *gorm.DB) {
 }
 
 
-func get5thResultSortedByScore(db *gorm.DB) []Result {
+func Get5thResultSortedByScore(id uint, db *gorm.DB) []Result {
 	var results []Result
-	db.Order("score asc").Order("created_at asc").Limit(5).Find(&results)
+	db.Where("service_id = ?", id).Order("score asc").Order("created_at asc").Limit(5).Find(&results)
 	return results
 }
