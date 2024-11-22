@@ -39,7 +39,12 @@ export default function Leaderboard() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://54.84.41.124:8080/');
+        const response = await fetch('http://localhost:8080/1', {
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+          },
+        });
         const data = await response.json();
         setTopUsers(data); // Update state with fetched data
       } catch (error) {
@@ -47,7 +52,7 @@ export default function Leaderboard() {
       }
     };
 
-    const intervalId = setInterval(fetchData, 1000);
+    const intervalId = setInterval(fetchData, 10000);
 
     return () => clearInterval(intervalId);
   }, []);

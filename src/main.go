@@ -3,6 +3,7 @@ package main
 import (
 	"net/http"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 
@@ -16,6 +17,19 @@ func main() {
 	db.ShowAllTableHeader(database) // development用
 
 	router := gin.Default()
+
+	// ここからCorsの設定
+	router.Use(cors.New(cors.Config{
+		// アクセスを許可したいアクセス元
+		AllowOrigins: []string{"*"},
+		// アクセスを許可したいHTTPメソッド(以下の例だとPUTやDELETEはアクセスできません)
+		AllowMethods: []string{
+			"POST",
+			"GET",
+		},
+		// 許可したいHTTPリクエストヘッダ
+		AllowHeaders: []string{"*"},
+	}))
 
 	// "/" ルートにアクセスすると {"message": "Hai"} を返す
 	router.GET("/", func(c *gin.Context) {
