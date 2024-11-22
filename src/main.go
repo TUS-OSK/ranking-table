@@ -83,7 +83,7 @@ func main() {
 		}
 
 		// 成功したとき
-		c.JSON(http.StatusCreated, gin.H{"message": "success"})
+		c.JSON(http.StatusCreated, newResult)
 	})
 
 	router.Run(":8080")
