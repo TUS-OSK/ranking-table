@@ -8,6 +8,7 @@ import (
 
 	"ranking-table/db"
 	"ranking-table/models"
+	"strconv"
 )
 
 func main() {
@@ -54,9 +55,9 @@ func main() {
 
 	//本実装１
 	router.POST("/:id", func(c *gin.Context) {
-	
-		serviceID := c.Param("id")
-	
+
+		serviceID, _ := strconv.ParseUint(c.Param("id"), 10, 32)
+
 		var json struct {
 			Score    int    `json:"score"`
 			UserName string `json:"username"`
@@ -66,13 +67,13 @@ func main() {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-	
+
 		newResult := models.Result{
-			ServiceID: serviceID
-			Score:     json.Score
-			UserName:  json.UserName
+			ServiceID: uint(serviceID),
+			Score:     json.Score,
+			UserName:  json.UserName,
 		}
-	
+
 		// 失敗したときの実装だが、よくわからない
 		result := database.Create(&newResult)
 		// result.Errorはgormライブラリ内で定義されているらしい
@@ -80,7 +81,7 @@ func main() {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})
 			return
 		}
-	
+
 		// 成功したとき
 		c.JSON(http.StatusCreated, gin.H{"message": "success"})
 	})
