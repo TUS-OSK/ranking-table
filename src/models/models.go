@@ -43,3 +43,10 @@ func ResultSeed(db *gorm.DB) {
 		db.FirstOrCreate(&result, result)
 	}
 }
+
+
+func get5thResultSortedByScore(db *gorm.DB) []Result {
+	var results []Result
+	db.Order("score asc").Order("created_at asc").Limit(5).Find(&results)
+	return results
+}
