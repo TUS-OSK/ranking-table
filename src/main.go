@@ -8,11 +8,8 @@ import (
 
 	"ranking-table/db"
 	"ranking-table/models"
+	"strconv"
 )
-
-
-
-
 
 func main() {
 	database := databaseInit()
@@ -54,6 +51,39 @@ func main() {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
 			return
 		}
+	})
+
+	//本実装１
+	router.POST("/:id", func(c *gin.Context) {
+
+		serviceID, _ := strconv.ParseUint(c.Param("id"), 10, 32)
+
+		var json struct {
+			Score    int    `json:"score"`
+			UserName string `json:"username"`
+		}
+		err := c.ShouldBindJSON(&json)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		newResult := models.Result{
+			ServiceID: uint(serviceID),
+			Score:     json.Score,
+			UserName:  json.UserName,
+		}
+
+		// 失敗したときの実装だが、よくわからない
+		result := database.Create(&newResult)
+		// result.Errorはgormライブラリ内で定義されているらしい
+		if result.Error != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})
+			return
+		}
+
+		// 成功したとき
+		c.JSON(http.StatusCreated, newResult)
 	})
 
 	router.Run(":8080")
