@@ -86,6 +86,15 @@ func main() {
 		c.JSON(http.StatusCreated, newResult)
 	})
 
+	// 本実装2
+	router.GET("/:id", func(c *gin.Context) {
+
+
+		// 上位5件のスコアを取得する
+		results := models.Get5thResultSortedByScore(uint(id), database)
+	})
+
+
 	router.Run(":8080")
 
 }
