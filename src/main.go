@@ -54,13 +54,35 @@ func main() {
 
 	//本実装１
 	router.POST("/:id", func(c *gin.Context) {
-		// ここでDBを構築、設定している（変更の必要なし）
-		database := databaseInit()
-		db.ShowAllTableHeader(database) // development用
-
-		// ServiceID(:id)か1で、Score=100, username=user_7を保存する
-		database.Create(&models.Result{ServiceID: 1, Score: 100, UserName: "user_7"})
-		c.JSON(http.StatusCreated, gin.H{})
+	
+		serviceID := c.Param("id")
+	
+		var json struct {
+			Score    int    `json:"score"`
+			UserName string `json:"username"`
+		}
+		err := c.ShouldBindJSON(&json)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+	
+		newResult := models.Result{
+			ServiceID: serviceID
+			Score:     json.Score
+			UserName:  json.UserName
+		}
+	
+		// 失敗したときの実装だが、よくわからない
+		result := database.Create(&newResult)
+		// result.Errorはgormライブラリ内で定義されているらしい
+		if result.Error != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})
+			return
+		}
+	
+		// 成功したとき
+		c.JSON(http.StatusCreated, gin.H{"message": "success"})
 	})
 
 	router.Run(":8080")
