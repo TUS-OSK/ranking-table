@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"fmt"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -96,6 +97,7 @@ func main() {
 			return
 		}
 
+		fmt.Println(newResult)
 		// 成功したとき
 		c.JSON(http.StatusCreated, newResult)
 	})
