@@ -46,6 +46,9 @@ export default function Leaderboard() {
           },
         });
         const data = await response.json();
+        while (data.length < 5) {
+          data.push({ name: "", score: 0 });
+        }
         setTopUsers(data); // Update state with fetched data
       } catch (error) {
         console.error('Error fetching leaderboard data:', error);
