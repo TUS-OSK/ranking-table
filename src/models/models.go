@@ -30,6 +30,10 @@ func ServiceSeed(db *gorm.DB) {
 
 func Get5thResultSortedByScore(id uint, db *gorm.DB) []Result {
 	var results []Result
-	db.Where("service_id = ?", id).Order("score asc").Order("created_at asc").Limit(5).Find(&results)
+	db.Where("service_id = ? AND deleted_at IS NULL", id).Order("score asc").Order("created_at asc").Limit(5).Find(&results)
 	return results
+}
+
+func DeleteAllResults(db *gorm.DB) {
+	db.Delete(&Result{}, "1 = 1")
 }
