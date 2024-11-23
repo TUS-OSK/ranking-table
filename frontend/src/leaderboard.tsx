@@ -45,7 +45,10 @@ export default function Leaderboard() {
             'Access-Control-Allow-Origin': '*',
           },
         });
-        const data = await response.json();
+        let data = await response.json();
+        if (!data) {
+          data = [];
+        }
         while (data.length < 5) {
           data.push({ name: "", score: 0 });
         }
